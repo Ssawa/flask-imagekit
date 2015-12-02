@@ -17,6 +17,8 @@ class Conf():
 
     BASE_PREFIX = ''
 
+    USE_SCIPY = True
+
     IMAGEKIT_CACHEFILE_NAMER = 'flask_imagekit.cachefiles.namers.hash'
     IMAGEKIT_SPEC_CACHEFILE_NAMER = 'flask_imagekit.cachefiles.namers.source_name_as_path'
     IMAGEKIT_CACHEFILE_DIR = 'CACHE/images'

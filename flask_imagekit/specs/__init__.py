@@ -2,6 +2,7 @@ from copy import copy
 from ..exceptions import MissingSource, AlreadyRegistered
 from ..cachefiles.backends import get_default_cachefile_backend
 from ..cachefiles.strategies import load_strategy
+from ..processors.scipy import process_image as scipy_process_image
 from ..utils import open_image, get_by_qname, process_image, conf
 from .. import hashers
 from ..registry import generator_registry, register
@@ -143,7 +144,12 @@ class ImageSpec(BaseImageSpec):
             self.source.open()
             img = open_image(self.source)
 
-        return process_image(img, processors=self.processors,
+        if conf.USE_SCIPY:
+            process = scipy_process_image
+        else:
+            process = process_image
+
+        return process(img, processors=self.processors,
                              format=self.format, autoconvert=self.autoconvert,
                              options=self.options)
 
