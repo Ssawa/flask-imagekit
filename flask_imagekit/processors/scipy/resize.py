@@ -18,9 +18,9 @@ class Resize(object):
         self.upscale = upscale
 
     def process(self, img):
-        from scipy.misc import imresize
+        from skimage.transform import resize
         if self.upscale or (self.width < img.size[0] and self.height < img.size[1]):
-            img = imresize(img, (self.width, self.height))
+            img = resize(img, (self.width, self.height))
         return img
 
 
@@ -104,7 +104,7 @@ class ResizeToCover(object):
         self.upscale = upscale
 
     def process(self, img):
-        original_height, original_width = img.size
+        original_height, original_width, _ = img.shape
         ratio = max(float(self.width) / original_width,
                 float(self.height) / original_height)
         new_width, new_height = (int(round(original_width * ratio)),
